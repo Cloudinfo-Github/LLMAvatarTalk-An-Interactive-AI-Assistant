@@ -49,7 +49,7 @@ pip install -r requirements.txt
     OLLAMA_MODEL=llama3
     RIVA_URI=192.168.1.205:50051
     ```
-   Note: protobuf is pinned to 5.29.6 due to NVIDIA Riva client compatibility; upgrading requires a newer Riva client that supports protobuf 6.
+   Note: protobuf is pinned to 6.33.5; install NVIDIA Riva client separately with `pip install --no-deps nvidia-riva-client==2.24.0` to avoid grpcio pin conflicts.
 3. Set the Riva server's IP in `RIVA_URI` (or edit the default in `config.py`). The default port for Riva servers is "50051".
     ```plaintext
     RIVA_URI=192.168.1.205:50051

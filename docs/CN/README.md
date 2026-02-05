@@ -49,7 +49,7 @@ pip install -r requirements.txt
     OLLAMA_MODEL=llama3
     RIVA_URI=192.168.1.205:50051
     ```
-   注意：protobuf 需要固定在 5.29.6 以符合 NVIDIA Riva client 的相依性，若要升級需使用支援 protobuf 6 的 Riva client。
+   注意：protobuf 已固定在 6.33.5；請改用 `pip install --no-deps nvidia-riva-client==2.24.0` 單獨安裝 Riva client 以避免 grpcio 相依衝突。
 3. 將 Riva 伺服器的 IP:PORT 設定在 RIVA_URI（或修改 config.py 預設值），一般 Riva 伺服器的 PORT 為 "50051"。
     ```plaintext
     RIVA_URI=192.168.1.205:50051

@@ -1,5 +1,5 @@
-grpcio==1.67.1
-grpcio-tools==1.67.1
+grpcio==1.76.0
+grpcio-tools==1.76.0
 numpy==2.4.2
 soundfile==0.13.1
 ipykernel==7.1.0
@@ -9,7 +9,8 @@ langchain-community==0.4.1
 langchain-core==1.2.8
 langchain-ollama==1.0.1
 ollama==0.6.1
-nvidia-riva-client==2.24.0
+# NVIDIA Riva client pins grpcio/grpcio-tools 1.67.1; install separately with --no-deps.
+# nvidia-riva-client==2.24.0
 protobuf==6.33.5
 sounddevice==0.5.5
 pyaudio==0.2.14
