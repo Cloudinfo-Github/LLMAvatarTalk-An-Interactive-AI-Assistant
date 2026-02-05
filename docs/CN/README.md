@@ -14,18 +14,17 @@ LLMAvatarTalk 是一個創新的專案，結合了最先進的 AI 技術，創�
 
 ## 功能特色
 - **語音識別**：使用 NVIDIA RIVA ASR 技術，將用戶的語音即時轉換成文字。
-- **語言處理**：利用 NVIDIA NIM APIs 使用先進的LLM(如llama3-70b-instruct)進行深入的語義理解和回應生成。
+- **語言處理**：使用本機 LLM 後端（例如 Ollama 搭配 llama3）進行深入的語義理解和回應生成。
 - **文字到語音**：通過 NVIDIA RIVA TTS 將生成的文字回應轉換成自然的語音輸出。
 - **面部動畫**：使用 Audio2Face 技術根據語音輸出生成逼真的面部表情和動畫。
 - **虛幻引擎整合**：利用 Unreal Engine 的 Metahuman 與 Audio2Face 實現實時連結，增強虛擬角色的表現力。
-- **LangChain**：簡化 NVIDIA RIVA 和 NVIDIA NIM API 的集成，為 AI 開發提供無縫且高效的工作流程。
+- **LangChain**：簡化 NVIDIA RIVA 與本機 LLM 後端的集成，為 AI 開發提供無縫且高效的工作流程。
 
 ## 架構
 <img src = "https://github.com/wsxqaza12/LLMAvatarTalk-An-Interactive-AI-Assistant/blob/main/images/architecture%20diagram.png" width ="700" />
 
 ## 先決條件
-- NVIDIA NIMs API KEY
-    - 可以在 [NVIDIA NIMs](https://build.nvidia.com/explore/discover?signin=false&signin_corporate=false) 申請免費的 1000 credits 
+- 本機 LLM 後端（Ollama 或相容服務）
 - Nvidia Riva Server
    - [Riva 教學](../RIVA/RIVA_Tutorial.md)
 - Audio2Face
@@ -44,14 +43,16 @@ pip install -r requirements.txt
 
 ## 執行
 1. 確定你已經架設好 Riva 伺服器並安裝好 Audio2Face 與 Unreal Engine
-2. 創建 .env 並輸入 NVIDIA NIMs API KEY，你可以在 .env.sample 找到範例
+2. 創建 .env 並設定本機 LLM 端點（Ollama 預設如下），你可以在 .env.sample 找到範例
    ```plaintext
-   NVIDIA_API_KEY=nvapi-
+   OLLAMA_BASE_URL=http://localhost:11434
+   OLLAMA_MODEL=llama3
+   RIVA_URI=192.168.1.205:50051
    ```
-3. 將 Riva 伺服器的 IP:PORT 填入 config.py 中的 URI，一般Riva 伺服器的 PORT 為 "50051"。
-   ```plaintext
-   URI = '192.168.1.205:50051'
-   ```
+3. 將 Riva 伺服器的 IP:PORT 設定在 RIVA_URI（或修改 config.py 預設值），一般 Riva 伺服器的 PORT 為 "50051"。
+    ```plaintext
+    RIVA_URI=192.168.1.205:50051
+    ```
 4. 在 config.py 檔案中，可以指定回應的語言。可用選項為'en-US'或'zh-CN'。預設語言設定為'en-US'。
    ```plaintext
     LANGUAGE = 'en-US' # 將中文改為 'zh-CN'
@@ -80,8 +81,7 @@ pip install -r requirements.txt
   - [Audio2Face to UE Live Link Plugin](https://docs.omniverse.nvidia.com/audio2face/latest/user-manual/livelink-ue-plugin.html)
   
 ### LangChain
-  - [LangChain Integrates NVIDIA NIM for GPU-optimized LLM Inference in RAG](https://blog.langchain.dev/nvidia-nim/)
-  - [NVIDIA NIMs](https://python.langchain.com/v0.2/docs/integrations/chat/nvidia_ai_endpoints/)
+  - [Ollama](https://ollama.com/)
   - [NVIDIA Riva: ASR and TTS](https://python.langchain.com/v0.1/docs/integrations/tools/nvidia_riva/)
   
 ### Projects

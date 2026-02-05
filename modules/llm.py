@@ -1,22 +1,19 @@
 from langchain_core.prompts import PromptTemplate
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
-from langchain.memory import ConversationBufferWindowMemory
-from langchain.chains import ConversationChain
-from dotenv import load_dotenv
-from config import LANGUAGE
-import os
+from langchain_classic.memory import ConversationBufferWindowMemory
+from langchain_classic.chains import ConversationChain
+from langchain_community.chat_models import ChatOllama
+from config import LANGUAGE, OLLAMA_BASE_URL, OLLAMA_MODEL
 import re
 
 
 class LLMService:
-    def __init__(self, model="meta/llama3-70b-instruct", k=5):
-        load_dotenv()
-        self.langauge = LANGUAGE
-        self.api_key = os.getenv("NVIDIA_API_KEY")
+    def __init__(self, model=OLLAMA_MODEL, base_url=OLLAMA_BASE_URL, k=5):
+        self.language = LANGUAGE
         self.model = model
+        self.base_url = base_url
         self.k = k
         self.prompt = self.setup_prompt()
-        self.llm = ChatNVIDIA(model=self.model)
+        self.llm = ChatOllama(model=self.model, base_url=self.base_url)
         self.conversation = ConversationChain(
             prompt=self.prompt,
             llm=self.llm,
@@ -25,7 +22,7 @@ class LLMService:
         )
 
     def setup_prompt(self):
-        if self.langauge == 'zh-CN':
+        if self.language == 'zh-CN':
             template = """Always response in Chinese(汉字), not English
 
             Current conversation:

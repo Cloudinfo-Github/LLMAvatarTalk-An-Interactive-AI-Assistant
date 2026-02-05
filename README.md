@@ -14,18 +14,17 @@ Click the thumbnail below to watch the demo on YouTube:
 
 ## Features
 - **Speech Recognition**: Converts user speech into text in real-time using NVIDIA RIVA ASR technology.
-- **Language Processing**: Leverages advanced LLM (such as llama3-70b-instruct) via NVIDIA NIM APIs for deep semantic understanding and response generation.
+- **Language Processing**: Leverages a local LLM backend (such as Ollama with llama3) for deep semantic understanding and response generation.
 - **Text-to-Speech**: Transforms generated text responses into natural-sounding speech using NVIDIA RIVA TTS.
 - **Facial Animation**: Generates realistic facial expressions and animations based on audio output using Audio2Face technology.
 - **Unreal Engine Integration**: Enhances virtual character expressiveness by real-time linking Audio2Face with Unreal Engine's Metahuman.
-- **LangChain Integration**: Simplifies the integration of NVIDIA RIVA and NVIDIA NIM APIs, providing a seamless and efficient workflow for AI development.
+- **LangChain Integration**: Simplifies the integration of NVIDIA RIVA and the local LLM backend, providing a seamless and efficient workflow for AI development.
 
 ## Architecture
 <img src="https://github.com/wsxqaza12/LLMAvatarTalk-An-Interactive-AI-Assistant/blob/main/images/architecture%20diagram.png" width="650" />
 
 ## Prerequisites
-- NVIDIA NIMs API KEY
-  - Apply for free 1000 credits at [NVIDIA NIMs](https://build.nvidia.com/explore/discover?signin=false&signin_corporate=false)
+- Local LLM backend (Ollama or compatible server)
 - Nvidia Riva Server
   - [RIVA Step-by-step Tutorial](./docs/RIVA/RIVA_Tutorial.md)
 - Audio2Face
@@ -44,14 +43,16 @@ pip install -r requirements.txt
 
 ## Execution
 1. Ensure you have set up the Riva server and configured Audio2Face and Unreal Engine.
-2. Create a `.env` file and input the NVIDIA NIMs API KEY. You can find a sample in .env.sample.
+2. Create a `.env` file and set the local LLM endpoint (Ollama defaults shown). You can find a sample in .env.sample.
    ```plaintext
-   NVIDIA_API_KEY=nvapi-
+   OLLAMA_BASE_URL=http://localhost:11434
+   OLLAMA_MODEL=llama3
+   RIVA_URI=192.168.1.205:50051
    ```
-3. Input the Riva server's IP into the URI field in `config.py`. The default port for Riva servers is "50051".
-   ```plaintext
-   URI = '192.168.1.205:50051'
-   ```
+3. Set the Riva server's IP in `RIVA_URI` (or edit the default in `config.py`). The default port for Riva servers is "50051".
+    ```plaintext
+    RIVA_URI=192.168.1.205:50051
+    ```
 4. In the `config.py` file, you can also specify the language for the application interface and responses. The available options are 'en-US' for English and 'zh-CN' for Chinese. The default language is set to English.
    ```plaintext
    LANGUAGE = 'en-US'  # Change to 'zh-CN' for Chinese.
@@ -78,8 +79,7 @@ Special thanks to the following projects and documentation:
   - [Audio2Face to UE Live Link Plugin](https://docs.omniverse.nvidia.com/audio2face/latest/user-manual/livelink-ue-plugin.html)
 
 ### LangChain
-  - [LangChain Integrates NVIDIA NIM for GPU-optimized LLM Inference in RAG](https://blog.langchain.dev/nvidia-nim/)
-  - [NVIDIA NIMs](https://python.langchain.com/v0.2/docs/integrations/chat/nvidia_ai_endpoints/)
+  - [Ollama](https://ollama.com/)
   - [NVIDIA Riva: ASR and TTS](https://python.langchain.com/v0.1/docs/integrations/tools/nvidia_riva/)
   
 ### Projects
