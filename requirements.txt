@@ -1,15 +1,18 @@
-grpcio==1.51.3
-grpcio-tools
-numpy==1.22.4
-soundfile
-ipykernel
-python-dotenv
-langchain
-langchain-nvidia-ai-endpoints
-langchain-community
-nvidia-riva-client
-protobuf==3.17.3
-sounddevice==0.4.2
-pyaudio
-pydub
-scipy==1.8.1
+grpcio==1.76.0
+grpcio-tools==1.76.0
+numpy==2.4.2
+soundfile==0.13.1
+ipykernel==7.1.0
+python-dotenv==1.2.1
+langchain==1.2.8
+langchain-community==0.4.1
+langchain-core==1.2.8
+langchain-ollama==1.0.1
+ollama==0.6.1
+# NVIDIA Riva client pins grpcio/grpcio-tools 1.67.1; install separately with --no-deps.
+# nvidia-riva-client==2.24.0
+protobuf==6.33.5
+sounddevice==0.5.5
+pyaudio==0.2.14
+pydub==0.25.1
+scipy==1.17.0

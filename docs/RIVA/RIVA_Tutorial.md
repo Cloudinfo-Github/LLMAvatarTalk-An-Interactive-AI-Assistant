@@ -38,7 +38,7 @@ My environment is WSL Ubuntu 20.04.6 LTS**
             3. On the API Key page, click Generate API Key.
             4. In response to the warning that your old API Key will become invalid, click CONTINUE to generate the key.
             5. Your API key is displayed with examples of how to use it.
-            6. Note that the API key for NIM is different.
+            6. Note that the API key for NIM is different (not required for the local LLM backend).
 
 2. Download RIVA
     1. Go to [NVIDIA RIVA Quickstart](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/riva/resources/riva_quickstart/files) and choose your desired version.
