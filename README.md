@@ -24,7 +24,7 @@ Click the thumbnail below to watch the demo on YouTube:
 <img src="https://github.com/wsxqaza12/LLMAvatarTalk-An-Interactive-AI-Assistant/blob/main/images/architecture%20diagram.png" width="650" />
 
 ## Prerequisites
-- Local LLM backend (Ollama or compatible server)
+- Local LLM backend (Ollama or compatible server).
 - Nvidia Riva Server
   - [RIVA Step-by-step Tutorial](./docs/RIVA/RIVA_Tutorial.md)
 - Audio2Face
@@ -45,10 +45,11 @@ pip install -r requirements.txt
 1. Ensure you have set up the Riva server and configured Audio2Face and Unreal Engine.
 2. Create a `.env` file and set the local LLM endpoint (Ollama defaults shown). You can find a sample in .env.sample.
    ```plaintext
-   OLLAMA_BASE_URL=http://localhost:11434
-   OLLAMA_MODEL=llama3
-   RIVA_URI=192.168.1.205:50051
-   ```
+    OLLAMA_BASE_URL=http://localhost:11434
+    OLLAMA_MODEL=llama3
+    RIVA_URI=192.168.1.205:50051
+    ```
+   Note: protobuf is pinned to 5.29.6 due to NVIDIA Riva client compatibility; upgrading requires a newer Riva client that supports protobuf 6.
 3. Set the Riva server's IP in `RIVA_URI` (or edit the default in `config.py`). The default port for Riva servers is "50051".
     ```plaintext
     RIVA_URI=192.168.1.205:50051

@@ -1,45 +1,34 @@
-from langchain_core.prompts import PromptTemplate
-from langchain_classic.memory import ConversationBufferWindowMemory
-from langchain_classic.chains import ConversationChain
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from config import LANGUAGE, OLLAMA_BASE_URL, OLLAMA_MODEL
 import re
 
 
 class LLMService:
     def __init__(self, model=OLLAMA_MODEL, base_url=OLLAMA_BASE_URL, k=5):
+        """k is the number of conversation turns to retain."""
         self.language = LANGUAGE
         self.model = model
         self.base_url = base_url
         self.k = k
-        self.prompt = self.setup_prompt()
         self.llm = ChatOllama(model=self.model, base_url=self.base_url)
-        self.conversation = ConversationChain(
-            prompt=self.prompt,
-            llm=self.llm,
-            verbose=False,
-            memory=ConversationBufferWindowMemory(k=self.k),
-        )
+        self.history = []
 
-    def setup_prompt(self):
+    def format_prompt(self, user_input: str) -> str:
+        history_entries = self.history
+        if len(history_entries) % 2 == 1:
+            # Trim odd entry if a response was interrupted before appending a pair.
+            history_entries = history_entries[:-1]
+        # Each turn has two entries (Human + AI), so take the last k turns.
+        history = "\n".join(history_entries[-(self.k * 2):])
         if self.language == 'zh-CN':
-            template = """Always response in Chinese(汉字), not English
-
-            Current conversation:
-            {history}
-            Human: {input}
-            AI Assistant:"""
+            system_prompt = "Always respond in Chinese(汉字), not English."
         else:
-            template = """The following is a friendly conversation between a human and an AI. AI will reply within 100 words. If the AI does not know the answer to a question, it truthfully says it does not know.
-
-            Current conversation:
-            {history}
-            Human: {input}
-            AI Assistant:"""
-
-        prompt = PromptTemplate(
-            input_variables=["history", "input"], template=template)
-        return prompt
+            system_prompt = (
+                "The following is a friendly conversation between a human and an AI. "
+                "AI will reply within 100 words. If the AI does not know the answer "
+                "to a question, it truthfully says it does not know."
+            )
+        return f"{system_prompt}\n\nCurrent conversation:\n{history}\nHuman: {user_input}\nAI Assistant:"
 
     def split_text_by_period(self, text, max_length=200):
         """
@@ -81,6 +70,9 @@ class LLMService:
         return chunks
 
     def invoke_conversation(self, user_input):
-        result = self.conversation.invoke(user_input)
-        response_chunks = self.split_text_by_period(result['response'])
+        prompt = self.format_prompt(user_input)
+        response = self.llm.invoke(prompt).content
+        self.history.append(f"Human: {user_input}")
+        self.history.append(f"AI Assistant: {response}")
+        response_chunks = self.split_text_by_period(response)
         return response_chunks

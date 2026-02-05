@@ -24,7 +24,7 @@ LLMAvatarTalk 是一個創新的專案，結合了最先進的 AI 技術，創�
 <img src = "https://github.com/wsxqaza12/LLMAvatarTalk-An-Interactive-AI-Assistant/blob/main/images/architecture%20diagram.png" width ="700" />
 
 ## 先決條件
-- 本機 LLM 後端（Ollama 或相容服務）
+- 本機 LLM 後端（Ollama 或相容服務）。
 - Nvidia Riva Server
    - [Riva 教學](../RIVA/RIVA_Tutorial.md)
 - Audio2Face
@@ -45,10 +45,11 @@ pip install -r requirements.txt
 1. 確定你已經架設好 Riva 伺服器並安裝好 Audio2Face 與 Unreal Engine
 2. 創建 .env 並設定本機 LLM 端點（Ollama 預設如下），你可以在 .env.sample 找到範例
    ```plaintext
-   OLLAMA_BASE_URL=http://localhost:11434
-   OLLAMA_MODEL=llama3
-   RIVA_URI=192.168.1.205:50051
-   ```
+    OLLAMA_BASE_URL=http://localhost:11434
+    OLLAMA_MODEL=llama3
+    RIVA_URI=192.168.1.205:50051
+    ```
+   注意：protobuf 需要固定在 5.29.6 以符合 NVIDIA Riva client 的相依性，若要升級需使用支援 protobuf 6 的 Riva client。
 3. 將 Riva 伺服器的 IP:PORT 設定在 RIVA_URI（或修改 config.py 預設值），一般 Riva 伺服器的 PORT 為 "50051"。
     ```plaintext
     RIVA_URI=192.168.1.205:50051
